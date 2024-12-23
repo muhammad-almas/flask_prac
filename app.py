@@ -22,6 +22,19 @@ def form():
 def dashboard():
     return render_template('dashboard.html')
 
+# required for form handling in flask
+app.secret_key = 'supersecretkey'
+
+# import MyForm class from test_form.py
+from test_form import MyForm
+# create route for test_form template
+@app.route('/test_form', methods=['GET', 'POST'])
+def test_form():
+    form = MyForm() # initialize class
+    if request.method == 'POST':
+        return f"Hello, {form.username.data}!"
+    return render_template('test_form.html', form=form)
+
 #run the app in debug mode
 if __name__ == '__main__':
     app.run(debug=True)
