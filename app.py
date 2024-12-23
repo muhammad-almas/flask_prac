@@ -1,7 +1,11 @@
 #import the Flask class and create an instance of it
 from flask import Flask, render_template, request, redirect, url_for
+from forms import HealthDataForm # import HealthDataFrom class from forms.py
 
 app = Flask(__name__)
+
+# required for form handling in flask
+app.secret_key = 'supersecretkey'
 
 #define homepage route and index() view function
 # Pass the required route to the decorator
@@ -12,31 +16,17 @@ def index():
 # route for form. it supports both get and post. it uses request, recirect and url_for (imported above)
 @app.route('/form', methods=['GET', 'POST'])
 def form():
+    form = HealthDataForm() # initialize form class
     if request.method == 'POST':
         # Process form data here
         return redirect(url_for('dashboard'))
-    return render_template('form.html')
+    return render_template('form.html', form=form) # pass forms variable to forms template
 
 # route for dashboard
 @app.route('/dashboard')
 def dashboard():
     return render_template('dashboard.html')
 
-# required for form handling in flask
-app.secret_key = 'supersecretkey'
-
-# import MyForm class from test_form.py
-from test_form import MyForm
-# create route for test_form template
-@app.route('/test_form', methods=['GET', 'POST'])
-def test_form():
-    form = MyForm() # initialize class
-    if request.method == 'POST' and form.validate_on_submit(): # this statement checks if form is submitted via post and if form is valid.
-        username = form.username.data
-        email = form.email.data
-        # return f"Hello, {username}! We’ve received your email: {email}."
-        return render_template('success.html', username=username, email=email)
-    return render_template('test_form.html', form=form)
 
 #run the app in debug mode
 if __name__ == '__main__':
