@@ -1,27 +1,27 @@
 #import the Flask class and create an instance of it
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
-
-# test post dictionary
-posts = {
-    1: {'title': 'Introduction to Flask', 'content': 'Flask is a lightweight WSGI web application framework...'},
-    2: {'title': 'Understanding Routes in Flask', 'content': 'Routes are a fundamental concept in Flask...'}
-}
 
 #define homepage route and index() view function
 # Pass the required route to the decorator
 @app.route('/')
 def index():
-    return render_template('index.html')
+    user = {'username': 'Jhon'}
+    return render_template('index.html', title='Home', user=user)
 
-# testing post route with url parameter
-@app.route('/post/<int:post_id>')
-def show_post(post_id):
-    post = posts.get(post_id)
-    if not post:
-        return '<h1>404: Post Not Found</h1>'
-    return f"<h1>{post['title']}</h1><p>{post['content']}</p>"
+# route for form. it supports both get and post. it uses request, recirect and url_for (imported above)
+@app.route('/form', methods=['GET', 'POST'])
+def form():
+    if request.method == 'POST':
+        # Process form data here
+        return redirect(url_for('dashboard'))
+    return render_template('form.html')
+
+# route for dashboard
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
 
 #run the app in debug mode
 if __name__ == '__main__':
