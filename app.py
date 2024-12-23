@@ -31,8 +31,10 @@ from test_form import MyForm
 @app.route('/test_form', methods=['GET', 'POST'])
 def test_form():
     form = MyForm() # initialize class
-    if request.method == 'POST':
-        return f"Hello, {form.username.data}!"
+    if form.validate_on_submit(): # this method checks if form is submitted via post and if form is valid.
+        username = form.username.data
+        email = form.email.data
+        return f"Hello, {username}! We’ve received your email: {email}."
     return render_template('test_form.html', form=form)
 
 #run the app in debug mode
