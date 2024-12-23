@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
-</head>
-<body>
-    <h1>Hello {{user.username}}</h1>
-    <ul>
-        {% for item in items %}
-            <li>{{ item }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h2>Welcome to the Health Tracker Dashboard</h2>
+        <p class="lead">This is your one-stop solution to track your daily health activities including exercise, meditation, and sleep.</p>
+        <a href="{{ url_for('form') }}" class="btn btn-info btn-lg">Start Tracking Your Health</a>
+    </div>
+{% endblock %}
