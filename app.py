@@ -15,10 +15,12 @@ posts = {
 def index():
     return render_template('index.html')
 
-# testing post route
-@app.route('/post/1')
-def show_post():
-    post = posts[1]
+# testing post route with url parameter
+@app.route('/post/<int:post_id>')
+def show_post(post_id):
+    post = posts.get(post_id)
+    if not post:
+        return '<h1>404: Post Not Found</h1>'
     return f"<h1>{post['title']}</h1><p>{post['content']}</p>"
 
 #run the app in debug mode
