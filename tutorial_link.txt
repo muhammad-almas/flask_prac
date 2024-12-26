@@ -1,0 +1,16 @@
+https://www.linkedin.com/learning/flask-essential-training-24681038/
+
+----------------
+
+create virual environment in vscode. use c:\anaconda3\python.exe in initial setup.
+
+then install flask
+.venv\Scripts\python.exe -m pip install flask
+
+install flask-wtf for flask forms
+.venv\Scripts\python.exe -m pip install flask-wtf
+
+----------------
+
+
+
