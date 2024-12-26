@@ -2,6 +2,15 @@
 from flask import Flask, render_template, request, redirect, url_for
 from forms import HealthDataForm # import HealthDataFrom class from forms.py
 
+# import db_uri from db_uri.py file.
+import os, sys
+parent_dir = os.path.dirname(os.path.abspath(__file__)) # path for current directory
+parent_dir = os.path.dirname(parent_dir) # path for parent directory
+sys.path.append(parent_dir) # add path to sys.path
+from db_uri import db_uri # import db_uri
+
+# print(db_uri)
+
 app = Flask(__name__)
 
 # required for form handling in flask
