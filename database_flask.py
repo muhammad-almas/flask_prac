@@ -30,3 +30,23 @@ class HealthData(Base):
 Base.metadata.create_all(engine)
 
 # run this file to create health_table in database.
+
+# seed data
+# Generate dummy data for the past 3 months
+from datetime import datetime, timedelta
+import random
+
+# insert data into projects and tasks tables.
+with Session(engine) as session:
+    start_date = datetime.now() - timedelta(days=90)
+    for i in range(20):
+        date = start_date + timedelta(days=i)
+        exercise = random.randint(0, 120)  # Exercise in minutes
+        meditation = random.randint(0, 60)  # Meditation in minutes
+        sleep = random.uniform(4, 10)  # Sleep in hours
+        data = HealthData(date=date, exercise=exercise, meditation=meditation, sleep=sleep)
+        session.add(data)
+
+    session.commit()
+
+    print("Database seeded with dummy data.")
