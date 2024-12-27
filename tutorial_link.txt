@@ -12,5 +12,10 @@ install flask-wtf for flask forms
 
 ----------------
 
+install flask-sqlalchemy and psycopg2
+.venv\Scripts\python.exe -m pip install flask-sqlalchemy
+.venv\Scripts\python.exe -m pip install psycopg2
+---------------
+
 
 

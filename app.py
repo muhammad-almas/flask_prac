@@ -1,6 +1,7 @@
 #import the Flask class and create an instance of it
 from flask import Flask, render_template, request, redirect, url_for
 from forms import HealthDataForm # import HealthDataFrom class from forms.py
+from flask_sqlalchemy import SQLAlchemy
 
 # import db_uri from db_uri.py file.
 import os, sys
@@ -9,12 +10,29 @@ parent_dir = os.path.dirname(parent_dir) # path for parent directory
 sys.path.append(parent_dir) # add path to sys.path
 from db_uri import db_uri # import db_uri
 
-# print(db_uri)
 
 app = Flask(__name__)
 
 # required for form handling in flask
 app.secret_key = 'supersecretkey'
+
+# setup Sqlalchemy
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+
+class HealthData(db.Model):
+    __tablename__ = 'health_data'
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date, nullable=False)
+    exercise = db.Column(db.Integer, nullable=False)
+    meditation = db.Column(db.Integer, nullable=False)
+    sleep = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f'<HealthData {self.id}>'
+
 
 #define homepage route and index() view function
 # Pass the required route to the decorator
