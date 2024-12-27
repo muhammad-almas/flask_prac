@@ -17,5 +17,9 @@ install flask-sqlalchemy and psycopg2
 .venv\Scripts\python.exe -m pip install psycopg2
 ---------------
 
+generate requirements text file
+.venv\Scripts\python.exe -m pip freeze > requirements.txt
+
+--------------
 
 
