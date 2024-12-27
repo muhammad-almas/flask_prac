@@ -46,10 +46,16 @@ def form():
     form = HealthDataForm() # initialize form class
     if request.method == 'POST' and form.validate_on_submit():
         # Process form data here
-        date=form.date.data
-        exercise = form.exercise.data
-        meditation = form.meditation.data
-        sleep = form.sleep.data
+        # Create a new health data entry
+        new_data = HealthData(
+            date=form.date.data,
+            exercise = form.exercise.data,
+            meditation = form.meditation.data,
+            sleep = form.sleep.data
+        )
+        # Add the new data to the database
+        db.session.add(new_data)
+        db.session.commit()
         # Redirect to the dashboard
         return redirect(url_for('dashboard'))
     return render_template('form.html', form=form) # pass forms variable to forms template
@@ -57,7 +63,9 @@ def form():
 # route for dashboard
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    # Retrieve all health data from the database
+    all_data = HealthData.query.all()
+    return render_template('dashboard.html', data=all_data)
 
 
 #run the app in debug mode
